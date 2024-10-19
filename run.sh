@@ -1,13 +1,12 @@
 #!/bin/bash
 
-[ ! -f $PWD/config.json ] && echo "config.json missing! (see config.json.template)" && exit 1
+chmod +x check-files.sh
+./check-files.sh
 
-docker build . -t belabox
-docker run --rm -it --name belabox \
-   -p 5000:5000/udp \
-   -p 8181:8181/tcp \
-   -p 8282:8282/udp \
-   -v $PWD/config.json:/app/config.json belabox
+docker compose build
+docker compose up -d
+
+echo "Successfully started your belabox-receiver Server, if you encounter any issues, please check the 'logs' folder."
 
 # SLS stats page:
 # http://localhost:8181/stats
